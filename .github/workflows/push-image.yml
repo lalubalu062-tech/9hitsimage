@@ -1,0 +1,23 @@
+name: Push 9hits Image to Docker Hub
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Ye aapko GitHub se manual run karne ka button dega
+
+jobs:
+  push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Pull Original Image
+        run: docker pull 9hitste/appv6:latest
+
+      - name: Tag Image with Your Name
+        # Yahan 'my-9hits' ki jagah aap apna manpasand naam rakh sakte ho
+        run: docker tag 9hitste/appv6:latest ${{ secrets.DOCKER_USERNAME }}/my-9hits:latest
+
+      - name: Push Image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-9hits:latest
