@@ -3,7 +3,7 @@ name: Push 9hits Image to Docker Hub
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: # Ye aapko GitHub se manual run karne ka button dega
+  workflow_dispatch:
 
 jobs:
   push-image:
@@ -15,9 +15,9 @@ jobs:
       - name: Pull Original Image
         run: docker pull 9hitste/appv6:latest
 
-      - name: Tag Image with Your Name
-        # Yahan 'my-9hits' ki jagah aap apna manpasand naam rakh sakte ho
-        run: docker tag 9hitste/appv6:latest ${{ secrets.DOCKER_USERNAME }}/my-9hits:latest
+      - name: Tag Image as backend
+        run: docker tag 9hitste/appv6:latest ${{ secrets.DOCKER_USERNAME }}/backend:latest
 
       - name: Push Image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-9hits:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/backend:latest
+        
